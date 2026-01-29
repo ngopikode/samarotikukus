@@ -15,16 +15,14 @@ import {
     MessageCircle,
     ChevronRight,
     PartyPopper,
-    Coffee
+    Coffee,
+    Info // Icon untuk toast
 } from 'lucide-react';
 
 // --- KOMPONEN SEO OTOMATIS ---
 const SEO = () => {
     useEffect(() => {
-        // 1. Set Judul Dokumen
         document.title = "Sama Roti Kukus - Seruput & Gigit | Kuliner Hits Kampar";
-
-        // 2. Fungsi Helper untuk Meta Tags
         const setMetaTag = (name, content, attribute = 'name') => {
             let element = document.querySelector(`meta[${attribute}="${name}"]`);
             if (!element) {
@@ -34,43 +32,79 @@ const SEO = () => {
             }
             element.setAttribute('content', content);
         };
-
-        // 3. Set Meta Description & Keywords
         setMetaTag('description', 'Nikmati sensasi roti kukus lumer dan minuman kekinian paling hits di Kampar sejak 2019. Lokasi: Kompleks @allnewtsjcafe. Pesan online sekarang!');
         setMetaTag('keywords', 'Sama Roti Kukus, Rokus Kampar, Kuliner Kampar, Roti Kukus Lumer, Jajanan Kampar');
         setMetaTag('theme-color', '#d4b982');
-
-        // 4. Set Open Graph (Untuk Preview WhatsApp/IG)
         setMetaTag('og:title', 'Sama Roti Kukus - Seruput & Gigit', 'property');
         setMetaTag('og:description', 'Camilan lumer paling hits di Kampar. Harga mulai 7k! Beli 4 Gratis 1.', 'property');
         setMetaTag('og:image', 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop', 'property');
         setMetaTag('og:type', 'website', 'property');
-
-    }, []); // Run sekali saat app dimuat
-
-    return null; // Komponen ini tidak merender visual apa-apa
+    }, []);
+    return null;
 };
 
 // --- DATA MENU ---
 const MENU_DATA = [
-    { id: 1, cat: 'roti', name: 'Rokus Original', price: 7000, desc: 'Pilih 1 varian rasa klasik favoritmu.', type: 'single', options: ['Cokelat Original', 'Tiramisu', 'Keju', 'Sarikaya', 'Choco Cruncy'], img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=200&auto=format&fit=crop' },
-    { id: 2, cat: 'roti', name: 'Rokus Mix', price: 9000, desc: 'Perpaduan 2 rasa lumer dalam satu gigitan.', type: 'single', options: ['Cokelat + Keju', 'Cokelat + Oreo', 'Cokelat + Kacang', 'Cokelat + Tiramisu', 'Sarikaya + Keju', 'Tiramisu + Keju', 'Tiramisu + Oreo', 'Choco Cruncy + Oreo'], img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=200&auto=format&fit=crop' },
-    { id: 3, cat: 'roti', name: 'Rokus Combo', price: 12000, desc: 'Eksplorasi rasa dengan maksimal 3 topping.', type: 'multi', options: ['Cokelat', 'Tiramisu', 'Keju', 'Sarikaya', 'Oreo', 'Kacang', 'Choco Cruncy'], img: 'https://images.unsplash.com/photo-1559811814-e2c57b5e69df?q=80&w=200&auto=format&fit=crop' },
-    { id: 4, cat: 'minuman', name: 'Kopi Susu Aren', price: 12000, desc: 'Signature coffee dengan gula aren asli.', type: 'drink', img: 'https://images.unsplash.com/photo-1541167760496-162955ed8a9f?q=80&w=200&auto=format&fit=crop' },
-    { id: 5, cat: 'minuman', name: 'Blue Ocean', price: 10000, desc: 'Kesegaran soda biru lemon yang unik.', type: 'drink', img: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200&auto=format&fit=crop' },
-    { id: 6, cat: 'minuman', name: 'Milky Mango', price: 13000, desc: 'Creamy milk dengan rasa mangga manis.', type: 'drink', img: 'https://images.unsplash.com/photo-1546173159-315724a31696?q=80&w=200&auto=format&fit=crop' },
-    { id: 7, cat: 'minuman', name: 'Passion Soda', price: 10000, desc: 'Soda markisa yang menyegarkan dahaga.', type: 'drink', img: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=200&auto=format&fit=crop' },
-    { id: 8, cat: 'minuman', name: 'Choco Milky', price: 12000, desc: 'Susu cokelat creamy yang nyoklat banget.', type: 'drink', img: 'https://images.unsplash.com/photo-1553177595-4de2bb0842b9?q=80&w=200&auto=format&fit=crop' },
-    { id: 9, cat: 'minuman', name: 'Yakult Mango', price: 12000, desc: 'Perpaduan Yakult dan mangga yang segar.', type: 'drink', img: 'https://images.unsplash.com/photo-1626082902cf1-787123668709?q=80&w=200&auto=format&fit=crop' },
-    { id: 10, cat: 'minuman', name: 'Yakult Peach', price: 12000, desc: 'Kesegaran Yakult dengan aroma peach.', type: 'drink', img: 'https://images.unsplash.com/photo-1626082902cf1-787123668709?q=80&w=200&auto=format&fit=crop' },
-    { id: 11, cat: 'minuman', name: 'Cendol Aren', price: 10000, desc: 'Cita rasa tradisional cendol gula aren.', type: 'drink', img: 'https://images.unsplash.com/photo-1572490122747-3968b75ec699?q=80&w=200&auto=format&fit=crop' }
+    {
+        id: 1, cat: 'roti', name: 'Rokus Original', price: 7000, desc: 'Pilih 1 varian rasa klasik favoritmu.',
+        type: 'single', options: ['Cokelat Original', 'Tiramisu', 'Keju', 'Sarikaya', 'Choco Cruncy'],
+        img: '/assets/img/rokus-ori.png'
+    },
+    // UPDATE HARGA: Mix jadi 8.000
+    {
+        id: 2, cat: 'roti', name: 'Rokus Mix', price: 8000, desc: 'Perpaduan 2 rasa lumer dalam satu gigitan.',
+        type: 'single', options: ['Cokelat + Keju', 'Cokelat + Oreo', 'Cokelat + Kacang', 'Cokelat + Tiramisu', 'Sarikaya + Keju', 'Tiramisu + Keju', 'Tiramisu + Oreo', 'Choco Cruncy + Oreo'],
+        img: '/assets/img/rokus-mix.png'
+    },
+    // UPDATE HARGA: Combo jadi 10.000
+    {
+        id: 3, cat: 'roti', name: 'Rokus Combo', price: 10000, desc: 'Eksplorasi rasa dengan maksimal 3 topping.',
+        type: 'multi', options: ['Cokelat', 'Tiramisu', 'Keju', 'Sarikaya', 'Oreo', 'Kacang', 'Choco Cruncy'],
+        img: '/assets/img/rokus-combo.png' },
+    // UPDATE HARGA MINUMAN: Semua 11rb kecuali Cendol
+    {
+        id: 4, cat: 'minuman', name: 'Kopi Susu Aren', price: 11000, desc: 'Signature coffee dengan gula aren asli.',
+        type: 'drink',
+        img: '/assets/img/kopi-susu-aren.jpeg'
+    },
+    {
+        id: 5, cat: 'minuman', name: 'Blue Ocean', price: 11000, desc: 'Kesegaran soda biru lemon yang unik.',
+        type: 'drink',
+        img: '/assets/img/blue-ocean.jpeg'
+    },
+    {
+        id: 6, cat: 'minuman', name: 'Milky Mango', price: 11000, desc: 'Creamy milk dengan rasa mangga manis.',
+        type: 'drink',
+        img: '/assets/img/milky-mango.jpeg'
+    },
+    {
+        id: 7, cat: 'minuman', name: 'Passion Soda', price: 11000, desc: 'Soda markisa yang menyegarkan dahaga.',
+        type: 'drink',
+        img: '/assets/img/passion-soda.jpeg'
+    },
+    {
+        id: 8, cat: 'minuman', name: 'Choco Milky', price: 11000, desc: 'Susu cokelat creamy yang nyoklat banget.',
+        type: 'drink',
+        img: '/assets/img/choco-milky.jpeg' },
+    {
+        id: 9, cat: 'minuman', name: 'Yakult Mango', price: 11000, desc: 'Perpaduan Yakult dan mangga yang segar.',
+        type: 'drink',
+        img: '/assets/img/yakult-mango.jpeg'
+    },
+    {
+        id: 10, cat: 'minuman', name: 'Yakult Peach', price: 11000, desc: 'Kesegaran Yakult dengan aroma peach.',
+        type: 'drink',
+        img: '/assets/img/yakult-peach.jpeg'
+    },
+    {
+        id: 11, cat: 'minuman', name: 'Cendol Aren', price: 10000, desc: 'Cita rasa tradisional cendol gula aren.',
+        type: 'drink', img: '/assets/img/cendol-aren.png'
+    }
 ];
 
-// --- UTILS ---
 const formatPrice = (price) => `Rp ${price.toLocaleString('id-ID')}`;
 const formatKPrice = (price) => `Rp ${(price / 1000).toFixed(0)}k`;
 
-// --- MAIN COMPONENT ---
 export default function App() {
     // --- STATE ---
     const [cart, setCart] = useState([]);
@@ -84,9 +118,18 @@ export default function App() {
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
     const [isQROpen, setIsQROpen] = useState(false);
 
+    // Toast State (Pengganti Alert)
+    const [toast, setToast] = useState({ show: false, message: '' });
+
     // Form States
     const [customerName, setCustomerName] = useState('');
     const [customerInfo, setCustomerInfo] = useState('');
+
+    // --- UTILS ---
+    const showToast = (message) => {
+        setToast({ show: true, message });
+        setTimeout(() => setToast({ show: false, message: '' }), 3000);
+    };
 
     // --- LOGIC ---
     const addToCart = (item, selectedVariants = '', quantity = 1) => {
@@ -99,6 +142,11 @@ export default function App() {
             }
             return [...prev, { ...item, cartName, qty: quantity }];
         });
+
+        // Show success toast only for direct adds or modal confirmation
+        if(item.cat !== 'roti' || selectedVariants) {
+            showToast('Berhasil ditambahkan ke keranjang');
+        }
     };
 
     const updateQty = (cartName, delta) => {
@@ -140,7 +188,7 @@ export default function App() {
 
     const handleWhatsApp = () => {
         if (!customerName || !customerInfo) {
-            alert("Lengkapi nama dan info meja/alamat dulu ya!");
+            showToast("Lengkapi nama & info meja dulu ya!");
             return;
         }
 
@@ -155,7 +203,6 @@ export default function App() {
     const OptionModal = () => {
         if (!isOptionOpen || !activeItem) return null;
 
-        // Modal internal state for Quantity
         const [modalQty, setModalQty] = useState(1);
 
         const handleSubmit = (e) => {
@@ -163,8 +210,12 @@ export default function App() {
             const formData = new FormData(e.target);
             const selected = formData.getAll('rasa');
 
-            if (selected.length === 0) return alert('Pilih varian rasa dulu ya kak!');
-            if (activeItem.type === 'multi' && selected.length > 3) return alert('Maksimal pilih 3 rasa saja!');
+            if (selected.length === 0) return showToast('Pilih varian rasa dulu ya kak!');
+
+            // Validasi Maksimal 3 Rasa untuk Combo
+            if (activeItem.type === 'multi' && selected.length > 3) {
+                return showToast('Maksimal pilih 3 rasa saja!');
+            }
 
             addToCart(activeItem, selected.join(', '), modalQty);
             setIsOptionOpen(false);
@@ -181,8 +232,8 @@ export default function App() {
                             <div className="flex items-center gap-2 mt-2">
                                 <span className="text-xs font-bold text-zinc-900 bg-[#d4b982]/20 px-2 py-1 rounded-md">{formatPrice(activeItem.price)}</span>
                                 <span className="text-[10px] font-medium text-zinc-400 uppercase tracking-wide">
-                  {activeItem.type === 'multi' ? 'Pilih Maks 3 Rasa' : 'Pilih 1 Varian'}
-                </span>
+                                    {activeItem.type === 'multi' ? 'Pilih Maks 3 Rasa' : 'Pilih 1 Varian'}
+                                </span>
                             </div>
                         </div>
                         <button onClick={() => setIsOptionOpen(false)} className="p-2 bg-zinc-50 hover:bg-zinc-100 rounded-full transition-colors">
@@ -231,16 +282,21 @@ export default function App() {
 
     // --- RENDER APP ---
     return (
-        <div className="bg-zinc-50 min-h-screen text-zinc-900 pb-24 font-sans antialiased selection:bg-[#d4b982] selection:text-black">
-            {/* Component SEO dipanggil di sini */}
+        <div className="bg-zinc-50 min-h-screen text-zinc-900 pb-24 font-sans antialiased selection:bg-[#d4b982] selection:text-black relative">
             <SEO />
-
-            {/* Font & Styles loaded dynamically for this preview, in real app put in index.css */}
             <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Dancing+Script:wght@700&display=swap');
-        .font-brand { font-family: 'Dancing Script', cursive; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-      `}</style>
+                @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Dancing+Script:wght@700&display=swap');
+                .font-brand { font-family: 'Dancing Script', cursive; }
+                .no-scrollbar::-webkit-scrollbar { display: none; }
+            `}</style>
+
+            {/* CUSTOM TOAST NOTIFICATION */}
+            <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[300] bg-zinc-900 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 flex items-center gap-3 border border-white/10 ${toast.show ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0 pointer-events-none'}`}>
+                <div className="bg-[#d4b982] rounded-full p-1 text-black">
+                    <Info className="w-3 h-3" />
+                </div>
+                <span className="text-xs font-bold tracking-wide">{toast.message}</span>
+            </div>
 
             {/* NAVBAR */}
             <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-zinc-200/50 px-6 py-3">
@@ -276,7 +332,7 @@ export default function App() {
                         </div>
 
                         <h2 className="text-[2.5rem] font-black leading-[0.9] mb-4 text-white uppercase tracking-tighter">
-                            Seruput <br/><span className="text-[#d4b982] italic font-serif">&</span> Gigit
+                            Seruput <br /><span className="text-[#d4b982] italic font-serif">&</span> Gigit
                         </h2>
 
                         <div className="mb-6 border-l-2 border-[#d4b982]/30 pl-3 space-y-1">
@@ -334,7 +390,6 @@ export default function App() {
             <main className={`max-w-xl mx-auto px-5 mt-4 ${viewMode === 'grid' ? 'grid grid-cols-2 gap-3' : 'flex flex-col gap-4'}`}>
                 {filteredItems.map(item => {
                     const qtyInCart = getSimpleItemQty(item.name);
-                    // Show stepper if item is NOT roti (no variants) AND already in cart
                     const showStepper = item.cat !== 'roti' && qtyInCart > 0;
 
                     return (
@@ -344,15 +399,15 @@ export default function App() {
                                 if (!e.target.closest('button')) handleItemClick(item);
                             }}
                             className={`
-                bg-white p-3 rounded-2xl border border-zinc-100 shadow-sm transition-all hover:shadow-md group cursor-pointer
-                ${viewMode === 'list' ? 'flex items-center gap-4' : 'flex flex-col gap-3'}
-                ${showStepper ? 'border-[#d4b982]/50 ring-1 ring-[#d4b982]/20' : ''}
-              `}
+                                bg-white p-3 rounded-2xl border border-zinc-100 shadow-sm transition-all hover:shadow-md group cursor-pointer
+                                ${viewMode === 'list' ? 'flex items-center gap-4' : 'flex flex-col gap-3'}
+                                ${showStepper ? 'border-[#d4b982]/50 ring-1 ring-[#d4b982]/20' : ''}
+                            `}
                         >
                             <div className={`
-                bg-zinc-50 overflow-hidden shrink-0 rounded-xl
-                ${viewMode === 'list' ? 'w-20 h-20' : 'w-full aspect-square'}
-              `}>
+                                bg-zinc-50 overflow-hidden shrink-0 rounded-xl
+                                ${viewMode === 'list' ? 'w-20 h-20' : 'w-full aspect-square'}
+                            `}>
                                 <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                             </div>
 
@@ -361,15 +416,14 @@ export default function App() {
                                     <div className={`flex justify-between ${viewMode === 'list' ? 'items-start mb-1' : 'flex-col gap-1 mb-2'}`}>
                                         <h3 className="font-bold text-zinc-900 text-sm leading-tight">{item.name}</h3>
                                         <span className={`font-black text-xs text-zinc-900 bg-[#d4b982]/30 px-2 py-0.5 rounded-md whitespace-nowrap w-fit`}>
-                      {formatKPrice(item.price)}
-                    </span>
+                                            {formatKPrice(item.price)}
+                                        </span>
                                     </div>
                                     <p className={`text-[10px] text-zinc-400 leading-tight ${viewMode === 'grid' ? 'line-clamp-1 mb-2' : 'line-clamp-2 mb-2'}`}>
                                         {item.desc}
                                     </p>
                                 </div>
 
-                                {/* DYNAMIC BUTTON / STEPPER */}
                                 {showStepper ? (
                                     <div className="flex items-center justify-between bg-zinc-900 rounded-lg p-1" onClick={(e) => e.stopPropagation()}>
                                         <button
@@ -393,8 +447,8 @@ export default function App() {
                                             handleItemClick(item);
                                         }}
                                         className={`
-                      w-full bg-zinc-50 text-zinc-900 border border-zinc-100 hover:bg-[#d4b982] hover:border-[#d4b982] py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-colors flex items-center justify-center gap-1
-                    `}
+                                            w-full bg-zinc-50 text-zinc-900 border border-zinc-100 hover:bg-[#d4b982] hover:border-[#d4b982] py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-colors flex items-center justify-center gap-1
+                                        `}
                                     >
                                         <span>Tambah</span> <Plus className="w-3 h-3" />
                                     </button>
